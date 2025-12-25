@@ -25,7 +25,7 @@ export const authConfig: NextAuthConfig = {
         // Magic Link Email - Passwordless premium UX
         Resend({
             apiKey: process.env.RESEND_API_KEY,
-            from: 'ARCHETYPE ORIGIN DYNAMICS <noreply@archetypeorigin.com>',
+            from: 'ARCHETYPE ORIGIN DYNAMICS <noreply@archetypeorigininc.com>',
         }),
     ],
 

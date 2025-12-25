@@ -28,8 +28,8 @@ interface AdminNotificationData {
 }
 
 // Sender configuration
-const FROM_EMAIL = 'ARCHETYPE ORIGIN DYNAMICS <noreply@archetypeorigin.com>';
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@archetypeorigin.com';
+const FROM_EMAIL = 'ARCHETYPE ORIGIN DYNAMICS <noreply@archetypeorigininc.com>';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'archetype.origin.dynamics@gmail.com';
 
 /**
  * Send waitlist confirmation email
@@ -293,7 +293,7 @@ export async function sendAccessGranted(
     ` : ''}
     
     <div class="body-text">
-      <a href="https://archetypeorigin.com/alchemist" class="cta">ENTER THE ALCHEMIST →</a>
+      <a href="https://archetypeorigininc.com/alchemist" class="cta">ENTER THE ALCHEMIST →</a>
     </div>
     
     <div class="footer">
