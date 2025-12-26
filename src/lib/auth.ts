@@ -9,25 +9,46 @@ const ADMIN_EMAILS = [
     process.env.ADMIN_EMAIL,
 ].filter(Boolean) as string[];
 
-// NextAuth configuration
-export const authConfig: NextAuthConfig = {
-    providers: [
-        // GitHub OAuth - Developer credibility
+// Build providers array conditionally
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const providers: any[] = [];
+
+// Only add GitHub if credentials exist
+if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
+    providers.push(
         GitHub({
             clientId: process.env.GITHUB_ID,
             clientSecret: process.env.GITHUB_SECRET,
-        }),
-        // Google OAuth - Enterprise legitimacy
+        })
+    );
+}
+
+// Only add Google if credentials exist
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    providers.push(
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        }),
-        // Magic Link Email - Passwordless premium UX
+        })
+    );
+}
+
+// Only add Resend if API key exists
+if (process.env.RESEND_API_KEY) {
+    providers.push(
         Resend({
             apiKey: process.env.RESEND_API_KEY,
-            from: 'ARCHETYPE ORIGIN DYNAMICS <noreply@archetypeorigininc.com>',
-        }),
-    ],
+            from: process.env.EMAIL_FROM || 'ARCHETYPE ORIGIN DYNAMICS <noreply@archetypeorigininc.com>',
+        })
+    );
+}
+
+// Log which providers are available (for debugging)
+console.log('[AUTH] Available providers:', providers.map(p => p.id || p.name));
+
+// NextAuth configuration
+export const authConfig: NextAuthConfig = {
+    providers,
 
     pages: {
         signIn: '/auth/signin',
