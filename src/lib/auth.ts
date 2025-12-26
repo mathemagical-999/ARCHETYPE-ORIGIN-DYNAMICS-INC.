@@ -14,10 +14,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
-        Resend({
-            apiKey: process.env.RESEND_API_KEY,
-            from: 'noreply@archetypeorigininc.com',
-        }),
+        // TODO: Resend requires database adapter (Prisma/Drizzle) - implement later
+        // Resend({
+        //     apiKey: process.env.RESEND_API_KEY,
+        //     from: 'noreply@archetypeorigininc.com',
+        // }),
     ],
     secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
     pages: {
