@@ -53,6 +53,12 @@ function isBot(userAgent: string | null): boolean {
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
+    
+    // Skip auth routes entirely - let NextAuth handle them
+    if (pathname.startsWith('/api/auth')) {
+        return NextResponse.next();
+    }
+    
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0] ||
         request.headers.get('x-real-ip') ||
         'unknown';
@@ -66,7 +72,7 @@ export function middleware(request: NextRequest) {
         });
     }
 
-    // Rate limit API routes
+    // Rate limit API routes (excluding auth)
     if (pathname.startsWith('/api/')) {
         // Stricter limit for sensitive endpoints
         const limit = pathname.includes('/auth/') ? 10 :
@@ -91,7 +97,7 @@ export function middleware(request: NextRequest) {
         response.headers.set(key, value);
     });
 
-    // Add CSP header (more permissive for WebGL)
+    // Add CSP header (more permissive for WebGL and OAuth)
     response.headers.set(
         'Content-Security-Policy',
         [
@@ -100,10 +106,10 @@ export function middleware(request: NextRequest) {
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' data: blob: https:",
             "font-src 'self' data:",
-            "connect-src 'self' https://*.supabase.co https://*.upstash.io https://api.resend.com",
+            "connect-src 'self' https://*.supabase.co https://*.upstash.io https://api.resend.com https://github.com https://api.github.com https://accounts.google.com https://*.googleapis.com",
             "frame-ancestors 'none'",
             "base-uri 'self'",
-            "form-action 'self'",
+            "form-action 'self' https://github.com https://accounts.google.com",
         ].join('; ')
     );
 
