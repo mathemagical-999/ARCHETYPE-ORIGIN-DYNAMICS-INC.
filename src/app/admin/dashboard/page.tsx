@@ -1,6 +1,9 @@
 import { getWaitlistStats } from '@/actions/waitlist';
 import { Suspense } from 'react';
 
+// Force dynamic rendering - this page uses headers/session
+export const dynamic = 'force-dynamic';
+
 // Stats Card Component
 function StatsCard({
     label,
@@ -118,10 +121,10 @@ async function DashboardContent() {
                                 <div className="flex items-center gap-3">
                                     <span
                                         className={`font-mono text-[10px] px-2 py-1 rounded ${believer.status === 'approved'
-                                                ? 'bg-reactor-green/20 text-reactor-green'
-                                                : believer.status === 'rejected'
-                                                    ? 'bg-red-500/20 text-red-400'
-                                                    : 'bg-yellow-400/20 text-yellow-400'
+                                            ? 'bg-reactor-green/20 text-reactor-green'
+                                            : believer.status === 'rejected'
+                                                ? 'bg-red-500/20 text-red-400'
+                                                : 'bg-yellow-400/20 text-yellow-400'
                                             }`}
                                     >
                                         {believer.status.toUpperCase()}
