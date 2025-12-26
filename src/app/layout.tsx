@@ -22,7 +22,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://archetypeorigindynamics.com"),
+  metadataBase: new URL("https://www.archetypeorigininc.com"),
   title: "ARCHETYPE ORIGIN DYNAMICS | Intelligence. Distilled.",
   description: "Mobile Architecture & Software Engineering. Building the infrastructure for tomorrow's intelligence. Industrial sci-fi design meets cutting-edge technology.",
   keywords: ["software engineering", "mobile architecture", "AI", "machine learning", "Toronto", "technology company"],
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_CA",
-    url: "https://archetypeorigindynamics.com",
+    url: "https://www.archetypeorigininc.com",
     siteName: "ARCHETYPE ORIGIN DYNAMICS",
     title: "ARCHETYPE ORIGIN DYNAMICS | Intelligence. Distilled.",
     description: "Mobile Architecture & Software Engineering. Building the infrastructure for tomorrow's intelligence.",
