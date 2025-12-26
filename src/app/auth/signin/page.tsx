@@ -97,7 +97,8 @@ export default function SignInPage() {
                                 </button>
                             </div>
 
-                            {/* Divider */}
+                            {/* Email sign-in disabled - Resend provider requires database adapter */}
+                            {/* 
                             <div className="relative mb-8">
                                 <div className="absolute inset-0 flex items-center">
                                     <div className="w-full border-t border-white/10"></div>
@@ -109,7 +110,6 @@ export default function SignInPage() {
                                 </div>
                             </div>
 
-                            {/* Email Form */}
                             <form onSubmit={handleEmailSignIn}>
                                 <div className="mb-4">
                                     <label className="block text-xs font-mono text-starlight/60 mb-2 tracking-wider">
@@ -139,6 +139,7 @@ export default function SignInPage() {
                                     )}
                                 </button>
                             </form>
+                            */}
                         </>
                     )}
                 </div>
