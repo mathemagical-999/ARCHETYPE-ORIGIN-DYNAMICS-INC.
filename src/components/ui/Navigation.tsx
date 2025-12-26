@@ -121,12 +121,20 @@ export default function Navigation({ onContactClick, onAboutClick }: NavigationP
                             ))}
                         </div>
 
-                        {/* Status Indicator */}
-                        <div className="hidden md:flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-reactor-green animate-pulse" />
-                            <span className="font-terminal text-xs tracking-widest text-starlight/40">
-                                ONLINE
-                            </span>
+                        {/* Sign In Link & Status Indicator */}
+                        <div className="hidden md:flex items-center gap-6">
+                            <a
+                                href="/auth/signin"
+                                className="font-terminal text-xs tracking-widest text-reactor-green hover:text-reactor-green/80 transition-colors uppercase border border-reactor-green/30 px-3 py-1.5 hover:bg-reactor-green/10"
+                            >
+                                SIGN IN
+                            </a>
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-reactor-green animate-pulse" />
+                                <span className="font-terminal text-xs tracking-widest text-starlight/40">
+                                    ONLINE
+                                </span>
+                            </div>
                         </div>
 
                         {/* Mobile Menu Button */}
@@ -175,6 +183,17 @@ export default function Navigation({ onContactClick, onAboutClick }: NavigationP
                                     {item.label}
                                 </motion.button>
                             ))}
+                            {/* Sign In Link */}
+                            <motion.a
+                                href="/auth/signin"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 20 }}
+                                transition={{ delay: navItems.length * 0.1 }}
+                                className="font-monolith text-2xl tracking-tightest text-reactor-green hover:text-reactor-green/80 transition-colors uppercase border border-reactor-green/30 px-6 py-2 mt-4"
+                            >
+                                SIGN IN
+                            </motion.a>
                         </div>
                     </motion.div>
                 )}

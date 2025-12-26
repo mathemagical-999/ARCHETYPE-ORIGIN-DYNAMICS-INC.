@@ -83,7 +83,13 @@ export default function RequestAccessModal({ isOpen, onClose }: RequestAccessMod
             }, 4000);
 
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred. Please try again.');
+            const errorMessage = err instanceof Error ? err.message : 'An error occurred. Please try again.';
+            // Show user-friendly message for common errors
+            if (errorMessage.includes('Failed to join waitlist') || errorMessage.includes('unexpected')) {
+                setError('Unable to process request. The system is temporarily unavailable. Please try again later.');
+            } else {
+                setError(errorMessage);
+            }
         } finally {
             setIsSubmitting(false);
         }
