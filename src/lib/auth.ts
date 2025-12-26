@@ -9,46 +9,25 @@ const ADMIN_EMAILS = [
     process.env.ADMIN_EMAIL,
 ].filter(Boolean) as string[];
 
-// Build providers array conditionally
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const providers: any[] = [];
-
-// Only add GitHub if credentials exist
-if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
-    providers.push(
-        GitHub({
-            clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET,
-        })
-    );
-}
-
-// Only add Google if credentials exist
-if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
-    providers.push(
-        Google({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        })
-    );
-}
-
-// Only add Resend if API key exists
-if (process.env.RESEND_API_KEY) {
-    providers.push(
-        Resend({
-            apiKey: process.env.RESEND_API_KEY,
-            from: process.env.EMAIL_FROM || 'ARCHETYPE ORIGIN DYNAMICS <noreply@archetypeorigininc.com>',
-        })
-    );
-}
-
-// Log which providers are available (for debugging)
-console.log('[AUTH] Available providers:', providers.map(p => p.id || p.name));
-
-// NextAuth configuration
+// NextAuth configuration - providers are defined inline to ensure proper initialization
 export const authConfig: NextAuthConfig = {
-    providers,
+    providers: [
+        // GitHub OAuth
+        GitHub({
+            clientId: process.env.GITHUB_ID ?? '',
+            clientSecret: process.env.GITHUB_SECRET ?? '',
+        }),
+        // Google OAuth
+        Google({
+            clientId: process.env.GOOGLE_CLIENT_ID ?? '',
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
+        }),
+        // Resend Magic Link
+        Resend({
+            apiKey: process.env.RESEND_API_KEY ?? '',
+            from: process.env.EMAIL_FROM || 'ARCHETYPE ORIGIN DYNAMICS <noreply@archetypeorigininc.com>',
+        }),
+    ],
 
     pages: {
         signIn: '/auth/signin',
@@ -58,17 +37,13 @@ export const authConfig: NextAuthConfig = {
 
     callbacks: {
         // Control who can sign in
-        async signIn({ user }) {
-            // For admin panel, only allow whitelisted emails
-            // You can modify this to allow any authenticated user
-            // and just restrict admin routes
+        async signIn() {
             return true; // Allow all sign-ins
         },
 
         // Add custom data to JWT token
         async jwt({ token, user }) {
             if (user?.email) {
-                // Check if user is an admin
                 token.isAdmin = ADMIN_EMAILS.includes(user.email);
                 token.clearanceLevel = token.isAdmin ? 10 : 0;
             }
@@ -89,7 +64,6 @@ export const authConfig: NextAuthConfig = {
             const isLoggedIn = !!auth?.user;
             const isAdmin = auth?.user?.isAdmin;
             const isOnAdmin = nextUrl.pathname.startsWith('/admin');
-            const isOnAuth = nextUrl.pathname.startsWith('/auth');
 
             if (isOnAdmin) {
                 if (!isLoggedIn) {
@@ -101,7 +75,6 @@ export const authConfig: NextAuthConfig = {
                 return true;
             }
 
-            // Allow all other routes
             return true;
         },
     },
@@ -118,7 +91,3 @@ export const authConfig: NextAuthConfig = {
 
 // Export auth handlers
 export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
-
-// Note: Type augmentations for next-auth are handled separately
-// The isAdmin and clearanceLevel properties work at runtime
-
