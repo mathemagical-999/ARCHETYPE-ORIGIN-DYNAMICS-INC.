@@ -27,11 +27,16 @@ export async function POST(request: NextRequest) {
             'unknown';
         const userAgent = headersList.get('user-agent') || 'unknown';
 
-        // Rate limiting
+        // Rate limiting (wrapped in try-catch to handle credential issues)
         if (isRedisConfigured() && rateLimiters.waitlist) {
-            const { success, remaining } = await rateLimiters.waitlist.limit(ip);
-            if (!success) {
-                return errorResponse('Too many requests. Please try again later.', 429);
+            try {
+                const { success } = await rateLimiters.waitlist.limit(ip);
+                if (!success) {
+                    return errorResponse('Too many requests. Please try again later.', 429);
+                }
+            } catch (rateLimitError) {
+                // Log but don't fail - proceed without rate limiting
+                console.warn('[WAITLIST] Rate limiting failed:', rateLimitError);
             }
         }
 
