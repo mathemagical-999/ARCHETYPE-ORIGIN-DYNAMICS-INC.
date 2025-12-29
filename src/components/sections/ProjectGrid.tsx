@@ -36,7 +36,7 @@ const projects: Project[] = [
         ],
         techStack: ['Swift', 'Core ML', 'PostgreSQL', 'Redis', 'Kubernetes', 'TensorFlow'],
         timeline: 'Q4 2025',
-        team: '12 Engineers',
+        team: '1 Engineer',
     },
     {
         codename: 'CHIMERA',
@@ -55,7 +55,7 @@ const projects: Project[] = [
         ],
         techStack: ['Rust', 'WebGL', 'CUDA', 'gRPC', 'Kafka', 'PyTorch'],
         timeline: 'Q2 2026',
-        team: '8 Engineers',
+        team: '1 Engineer',
     },
     {
         codename: 'OMEGA',
@@ -150,8 +150,8 @@ export default function ProjectGrid() {
 
                                     {/* Description */}
                                     <p className={`font-terminal text-sm leading-relaxed ${project.status === 'classified'
-                                            ? 'text-reactor-red/70 blur-[2px] select-none'
-                                            : 'text-starlight/60'
+                                        ? 'text-reactor-red/70 blur-[2px] select-none'
+                                        : 'text-starlight/60'
                                         }`}>
                                         {project.description}
                                     </p>
@@ -160,8 +160,8 @@ export default function ProjectGrid() {
                                     <div className="mt-8 pt-6 border-t border-white/10">
                                         <span
                                             className={`font-terminal text-xs tracking-widest transition-colors ${project.status === 'classified'
-                                                    ? 'text-reactor-red/50'
-                                                    : 'text-reactor-green group-hover:text-starlight'
+                                                ? 'text-reactor-red/50'
+                                                : 'text-reactor-green group-hover:text-starlight'
                                                 }`}
                                         >
                                             {project.status === 'classified' ? '[ ACCESS DENIED ]' : '[ VIEW DETAILS ]'}
